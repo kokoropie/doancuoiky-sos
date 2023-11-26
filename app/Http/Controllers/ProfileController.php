@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -27,17 +29,42 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        // dd($request->user()->details);
+        $validated = $request->validate([
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->user()->user_id, 'user_id')],
+            'name' => 'required|string|max:255',
+            'dateOfBirth' => 'nullable|date',
+            'phone' => 'nullable',
+            'gender' => 'required|in:0,1'
+        ]);
+        $request->user()->fill([
+            "name" => $validated["name"],
+            "email" => $validated["email"],
+        ]);
+
+        $request->user()->details->fill([
+            "dateOfBirth" => $validated["dateOfBirth"],
+            "phone" => $validated["phone"],
+            "gender" => $validated["gender"] . ""
+        ]);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
         $request->user()->save();
+        $request->user()->details->save();
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('profile.edit')->with('toast', [
+            'message' => 'Profile updated.', 
+            'config' => [
+                'type' => 'success', 
+                'position' => 'bottom-right', 
+                'autoClose' => 2000
+            ]
+        ]);
     }
 
     /**

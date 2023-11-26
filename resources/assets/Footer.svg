@@ -1,0 +1,44 @@
+<svg width="1447" height="166" viewBox="0 0 1447 166" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_b_361_137)">
+<path d="M242.5 107L290 65H763L807 107H998L1033 149.5H1125L1162 107H1222.5L1266.5 149.5V180.5H242.5V107Z" fill="#0068FF"/>
+<path d="M1266.5 149.5V180.5H1447.5V0H1393L1367.5 34H1309L1285.5 74V149.5H1266.5Z" fill="#0068FF"/>
+<path d="M242.5 180.5V107H160L135 65L110.5 34H3V180.5H242.5Z" fill="#0068FF"/>
+</g>
+<path d="M239.5 131L287 89H760L804 131H995L1030 173.5H1122L1159 131H1219.5L1263.5 173.5V204.5H239.5V131Z" fill="#02C166"/>
+<path d="M1263.5 173.5V204.5H1444.5V24H1390L1364.5 58H1306L1282.5 98V173.5H1263.5Z" fill="#02C166"/>
+<path d="M239.5 204.5V131H157L132 89L107.5 58H0V204.5H239.5Z" fill="#02C166"/>
+<path d="M1345.5 83.5V166.5H1397.5V49H1345.5V83.5Z" fill="black"/>
+<path d="M768 58.5V166.5H814.5V123.5V58.5H768Z" fill="black"/>
+<path d="M1310 83.5V166.5H1345.5V83.5H1310Z" fill="black"/>
+<path d="M814.5 166.5H858V123.5H814.5V166.5Z" fill="black"/>
+<path d="M882 152V166.5H902V152H882Z" fill="black"/>
+<path d="M247.5 99V166.5H284.5V99H247.5Z" fill="black"/>
+<path d="M214 152V166.5H229.5V152H214Z" fill="black"/>
+<path d="M76.5 135.5V166.5H106V135.5H76.5Z" fill="black"/>
+<path d="M76.5 76H0.5V166.5H76.5V135.5V76Z" fill="black"/>
+<path d="M76.5 166.5V135.5M76.5 166.5H0.5M76.5 166.5H106M76.5 135.5V76H0.5V166.5M76.5 135.5H106V166.5M106 166.5H214M214 166.5V152H229.5V166.5M214 166.5H229.5M229.5 166.5H247.5M247.5 166.5V99H284.5V166.5M247.5 166.5H284.5M284.5 166.5H768M768 166.5V58.5H814.5V123.5M768 166.5H814.5M814.5 166.5H858M814.5 166.5V123.5M882 166.5V152H902V166.5M882 166.5H858M882 166.5H902M902 166.5H858M858 166.5V123.5H814.5M1013.5 166.5H1248.5H1310M1310 166.5V83.5H1345.5M1310 166.5H1345.5M1345.5 83.5V166.5M1345.5 83.5V49M1345.5 166.5V49M1345.5 166.5H1397.5M1345.5 49H1397.5V166.5M1397.5 166.5H1445.5H0.5" stroke="black"/>
+<rect x="40" y="129" width="17" height="17" fill="white"/>
+<rect x="19" y="108" width="17" height="17" fill="white"/>
+<rect x="19" y="129" width="17" height="17" fill="white"/>
+<rect x="40" y="108" width="17" height="17" fill="white"/>
+<rect x="810.474" y="147.474" width="12.5263" height="12.5263" fill="white"/>
+<rect x="795" y="132" width="12.5263" height="12.5263" fill="white"/>
+<rect x="795" y="147.474" width="12.5263" height="12.5263" fill="white"/>
+<rect x="810.474" y="132" width="12.5263" height="12.5263" fill="white"/>
+<rect x="267.053" y="145.053" width="8.94737" height="8.94737" fill="white"/>
+<rect x="256" y="134" width="8.94737" height="8.94737" fill="white"/>
+<rect x="256" y="145.053" width="8.94737" height="8.94737" fill="white"/>
+<rect x="267.053" y="134" width="8.94737" height="8.94737" fill="white"/>
+<rect x="1359" y="135" width="17" height="17" fill="white"/>
+<rect x="1338" y="114" width="17" height="17" fill="white"/>
+<rect x="1338" y="135" width="17" height="17" fill="white"/>
+<rect x="1359" y="114" width="17" height="17" fill="white"/>
+<defs>
+<filter id="filter0_b_361_137" x="-1" y="-4" width="1452.5" height="188.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="2"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_361_137"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_361_137" result="shape"/>
+</filter>
+</defs>
+</svg>

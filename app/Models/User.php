@@ -11,6 +11,11 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+    // public $incrementing = true;
+    // protected $keyType = 'int';
+    // public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -41,5 +46,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        "created_at" => 'datetime:Y-m-d H:i:s',
+        "updated_at" => 'datetime:Y-m-d H:i:s'
     ];
+
+    public function exams() {
+        return $this->hasMany(Exam::class, 'user_id', 'user_id');
+    }
+
+    public function results() {
+        return $this->hasMany(Result::class, 'user_id', 'user_id');
+    }
+
+    public function details() {
+        return $this->hasOne(UserDetail::class, 'user_id', 'user_id');
+    }
+
+    protected static function booted() {
+        self::created(function (User $user) {
+            $user->details()->save(new UserDetail());
+        });
+        self::deleting(function (User $user) {
+            $user->results()->delete();
+            $user->exams()->delete();
+            $user->details()->delete();
+        });
+    }
 }
