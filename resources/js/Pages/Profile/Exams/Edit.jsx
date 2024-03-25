@@ -1,8 +1,10 @@
 import { Head, Link, useForm } from "@inertiajs/react";
 import Layout from "@/Layouts/Layout";
 import { useEffect, useState } from "react";
+import Modal from "@/Components/Modal";
 import { toast } from 'react-toastify';
 import copy from "copy-to-clipboard";
+import QRCode  from 'qrcode.react';
 
 export default function Edit({ auth, exam }) {
     const form = useForm({
@@ -14,6 +16,7 @@ export default function Edit({ auth, exam }) {
     });
     const [activeTab, setActiveTab] = useState(1);
     const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [showModalQR, setShowModalQR] = useState(false);
 
     const handleAddQuestion = () => {
         form.setData("questions", [
@@ -318,6 +321,13 @@ export default function Edit({ auth, exam }) {
                             </Link>
                         </div>
                         <div className="flex items-center justify-end divide-x divide-black">
+                            {exam.short_id && <div
+                                className="cursor-pointer"
+                                title="Save"
+                                onClick={() => setShowModalQR(true)}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" viewBox="0 0 24 24"><path fill="currentColor" d="M3 11V3h8v8H3Zm2-2h4V5H5v4ZM3 21v-8h8v8H3Zm2-2h4v-4H5v4Zm8-8V3h8v8h-8Zm2-2h4V5h-4v4Zm4 12v-2h2v2h-2Zm-6-6v-2h2v2h-2Zm2 2v-2h2v2h-2Zm-2 2v-2h2v2h-2Zm2 2v-2h2v2h-2Zm2-2v-2h2v2h-2Zm0-4v-2h2v2h-2Zm2 2v-2h2v2h-2Z"></path></svg>
+                            </div>}
                             <div
                                 className="cursor-pointer"
                                 title="Save"
@@ -407,6 +417,46 @@ export default function Edit({ auth, exam }) {
                     </div>
                 </div>
             </div>
+            {exam.short_id && <Modal
+                show={showModalQR}
+                onClose={() => setShowModalQR(false)}
+                className="relative rounded-lg pb-0"
+            >
+                <div className="absolute w-full h-full bg-black z-[-20] mt-2 rounded-lg ml-2 top-0 left-0" />
+                <div className="border-2 border-[#0068FF] flex flex-col bg-white rounded-lg">
+                    <div className="my-6 text-center">
+                        <span className="font-bold text-2xl bg-gradient-to-r from-[#0068FF] to-[#02C166] text-transparent" style={{
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent'
+                        }}>QR</span>
+                    </div>
+                    <div className="w-full flex items-center justify-center">
+                        <QRCode 
+                            size={256}
+                            value={route("exam.short", exam.short_id)}
+                            />
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                        <button
+                            onClick={() => {
+                                const canvas = document.querySelector("canvas");
+                                const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                                const a = document.createElement("a");
+                                a.href = image;
+                                a.download = `${exam.short_id}.png`;
+                                a.click();
+                            }}
+                            className="mt-8 bg-gradient-to-r from-[#0068FF] to-[#02C166] py-2 px-4 rounded-full text-white mb-8"
+                        >Save QR</button>
+                        <button
+                            onClick={() => {
+                                setShowModalQR(false);
+                            }}
+                            className="mt-8 bg-gradient-to-r from-[#0068FF] to-[#02C166] py-2 px-4 rounded-full text-white mb-8"
+                        >Cancel</button>
+                    </div>
+                </div>
+            </Modal>}
         </Layout>
     );
 }
