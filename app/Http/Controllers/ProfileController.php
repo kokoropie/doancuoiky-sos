@@ -31,8 +31,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        // dd($request->user()->details);
-        $validated = $request->validate([
+        $request->validate([
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->user()->user_id, 'user_id')],
             'name' => 'required|string|max:255',
             'dateOfBirth' => 'nullable|date',
@@ -40,14 +39,14 @@ class ProfileController extends Controller
             'gender' => 'required|in:0,1'
         ]);
         $request->user()->fill([
-            "name" => $validated["name"],
-            "email" => $validated["email"],
+            "name" => $request->input("name"),
+            "email" => $request->input("email"),
         ]);
 
         $request->user()->details->fill([
-            "dateOfBirth" => $validated["dateOfBirth"],
-            "phone" => $validated["phone"],
-            "gender" => $validated["gender"] . ""
+            "dateOfBirth" => $request->input("dateOfBirth"),
+            "phone" => $request->input("phone"),
+            "gender" => $request->input("gender")
         ]);
 
         if ($request->user()->isDirty('email')) {

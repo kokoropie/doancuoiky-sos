@@ -48,8 +48,19 @@ class ExamController extends Controller
         }
     }
 
-    public function join(Exam $exam)
+    public function join(Request $request, Exam $exam)
     {
+        if ($request->user()) {
+            $user = $request->user();
+            if ($user->results()->where("exam_id", $exam->exam_id)->exists()) {
+                $result = $user->results()->where("exam_id", $exam->exam_id)->first();
+                return redirect()->route('exam.result')->with('result', [
+                    "count_correct" => $result->count_correct,
+                    "count_questions" => $result->count_questions,
+                    "result" => round($result->count_correct / $result->count_questions * 10, 1)
+                ]);
+            }
+        }
         if (!session()->has('exam')) {
             $data = collect();
             $data->put('exam', $exam);
@@ -102,6 +113,17 @@ class ExamController extends Controller
     
     public function submit(Request $request, Exam $exam)
     {
+        if ($request->user()) {
+            $user = $request->user();
+            if ($user->results()->where("exam_id", $exam->exam_id)->exists()) {
+                $result = $user->results()->where("exam_id", $exam->exam_id)->first();
+                return redirect()->route('exam.result')->with('result', [
+                    "count_correct" => $result->count_correct,
+                    "count_questions" => $result->count_questions,
+                    "result" => round($result->count_correct / $result->count_questions * 10, 1)
+                ]);
+            }
+        }
         if (session()->has('exam')) {
             $ss_exam = session()->get('exam');
             if ($ss_exam->get("exam")->exam_id == $exam->exam_id) {
@@ -117,8 +139,7 @@ class ExamController extends Controller
                 $result = round($count_correct / $correct_answers->count() * 10, 1);
 
                 if ($request->user()) {
-                    $user = $request->user();
-                    $user->results()->create([
+                    $request->user()->results()->create([
                         "exam_id" => $exam->exam_id,
                         "count_correct" => $count_correct,
                         "count_questions" => $correct_answers->count()

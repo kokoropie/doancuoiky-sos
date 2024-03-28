@@ -67,6 +67,7 @@ class User extends Authenticatable
             $user->details()->save(new UserDetail());
         });
         self::deleting(function (User $user) {
+            $user->tokens()->delete();
             $user->results()->delete();
             $user->exams()->delete();
             $user->details()->delete();
