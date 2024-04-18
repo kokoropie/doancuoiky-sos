@@ -101,10 +101,12 @@ class UserController extends Controller
         if (! Auth::attempt($request->only('email', 'password'))) {
             RateLimiter::hit($this->throttleKey($request));
 
-            return response()->json([
+            response()->json([
                 'message' => trans('auth.failed'),
                 'errors' => [
-                    'email' => trans('auth.failed')
+                    'email' => [
+                        trans('auth.failed')
+                    ]
                 ]
             ])->throwResponse();
         }
