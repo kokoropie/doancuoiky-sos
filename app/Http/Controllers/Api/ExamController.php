@@ -123,7 +123,10 @@ class ExamController extends Controller
                 ]);
             }
         }
-        return response()->json($exam);
+        return response()->json([
+            ...$exam->toArray(),
+            "questions_count" => count($exam->questions)
+        ]);
     }
 
     public function join(Exam $exam)
