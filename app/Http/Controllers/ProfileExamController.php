@@ -70,47 +70,54 @@ class ProfileExamController extends Controller
      */
     public function update(Request $request, Exam $exam)
     {
-        // dd($request->all(), $exam);
-        $validated = $request->validate([
-            "title" => "required|string|max:255",
-            "description" => "nullable|string|max:255",
-            "duration" => "required|integer|min:60",
-            "status" => "required|in:draft,publish",
-            "questions" => "required|array",
-            "questions.*.question" => "required|string|max:255",
-            "questions.*.correct" => ["required","integer", function (string $attribute, mixed $value, \Closure $fail) use ($request) {
-                $other = explode(".", $attribute);
-                array_pop($other);
-                $other[] = "answers";
-                $other = implode(".", $other);
-                $max = count($request->input($other)) - 1;
-                if ($value < 0 || $value > $max) {
-                    $fail("Must choose the correct answer.");
-                }
-            }],
-            "questions.*.answers" => "required|array|min:2",
-            "questions.*.answers.*.answer" => "required|string|max:255",
-        ], [
-            "questions.*.question" => [
-                "required" => "The question field is required.",
-                "string" => "The question field must be a string.",
-                "max" => "The question field must not be greater than :max characters."
-            ],
-            "questions.*.correct" => [
-                "required" => "The correct field is required.",
-                "integer" => "The correct field must be an integer."
-            ],
-            "questions.*.answers" => [
-                "required" => "The answers field is required.",
-                "array" => "The answers field must be an array.",
-                "min" => "The answers field must have at least :min items."
-            ],
-            "questions.*.answers.*.answer" => [
-                "required" => "The answer field is required.",
-                "string" => "The answer field must be a string.",
-                "max" => "The answer field must not be greater than :max characters."
-            ]
-        ]);
+        if ($exam->editable) {
+            $validated = $request->validate([
+                "title" => "required|string|max:255",
+                "description" => "nullable|string|max:255",
+                "duration" => "required|integer|min:60",
+                "status" => "required|in:draft,publish",
+                "questions" => "required|array",
+                "questions.*.question" => "required|string|max:255",
+                "questions.*.correct" => ["required","integer", function (string $attribute, mixed $value, \Closure $fail) use ($request) {
+                    $other = explode(".", $attribute);
+                    array_pop($other);
+                    $other[] = "answers";
+                    $other = implode(".", $other);
+                    $max = count($request->input($other)) - 1;
+                    if ($value < 0 || $value > $max) {
+                        $fail("Must choose the correct answer.");
+                    }
+                }],
+                "questions.*.answers" => "required|array|min:2",
+                "questions.*.answers.*.answer" => "required|string|max:255",
+            ], [
+                "questions.*.question" => [
+                    "required" => "The question field is required.",
+                    "string" => "The question field must be a string.",
+                    "max" => "The question field must not be greater than :max characters."
+                ],
+                "questions.*.correct" => [
+                    "required" => "The correct field is required.",
+                    "integer" => "The correct field must be an integer."
+                ],
+                "questions.*.answers" => [
+                    "required" => "The answers field is required.",
+                    "array" => "The answers field must be an array.",
+                    "min" => "The answers field must have at least :min items."
+                ],
+                "questions.*.answers.*.answer" => [
+                    "required" => "The answer field is required.",
+                    "string" => "The answer field must be a string.",
+                    "max" => "The answer field must not be greater than :max characters."
+                ]
+            ]);
+        } else {
+            $validated = $request->validate([
+                "title" => "required|string|max:255",
+                "description" => "nullable|string|max:255",
+                "status" => "required|in:draft,publish",
+            ]);
+        }
         $exam->fill($validated);
         if ($exam->isDirty("status")) {
             if ($exam->status === "publish") {

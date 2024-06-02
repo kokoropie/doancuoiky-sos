@@ -102,6 +102,9 @@ class ExamController extends Controller
                 ]
             ]);
         }
+        $exam = $ss_exam->get("exam");
+        $exam->editable = false;
+        $exam->save();
 
         return Inertia::render('Exam/Join', [
             "exam" => $ss_exam->get("exam"),

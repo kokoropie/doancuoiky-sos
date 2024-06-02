@@ -113,121 +113,127 @@ export default function Edit({ auth, exam }) {
                     <div className="min-h-[100px] bg-white border-t border-black">
                         {form.data.questions[currentQuestion] &&
                             activeTab == 0 && (
-                                <div className="p-2">
-                                    <div className="flex flex-col">
-                                        <textarea
-                                            className="w-full rounded-xl"
-                                            type="text"
-                                            value={
-                                                form.data.questions[
-                                                    currentQuestion
-                                                ].question
-                                            }
-                                            onChange={(e) => {
-                                                form.data.questions[
-                                                    currentQuestion
-                                                ].question = e.target.value;
-                                                form.setData(
-                                                    "questions",
-                                                    form.data.questions
-                                                );
-                                            }}
-                                            placeholder="Question"
-                                        />
-                                        <small className="text-sm text-red-500">
-                                            {
-                                                form.errors[
-                                                    `questions.${currentQuestion}.question`
-                                                ]
-                                            }
-                                        </small>
-                                        <small className="text-sm text-red-500">
-                                            {
-                                                form.errors[
-                                                    `questions.${currentQuestion}.answers`
-                                                ]
-                                            }
-                                        </small>
-                                    </div>
-                                    <div className="mt-2 flex flex-col gap-2">
-                                        {form.data.questions[
-                                            currentQuestion
-                                        ].answers.map((answer, index) => (
-                                            <div key={index}>
-                                                <div className="flex items-center">
-                                                    <input
-                                                        type="radio"
-                                                        checked={
-                                                            form.data.questions[
-                                                                currentQuestion
-                                                            ].correct == index
-                                                        }
-                                                        onChange={(e) => {
-                                                            form.data.questions[
-                                                                currentQuestion
-                                                            ].correct = index;
-                                                            form.setData(
-                                                                "questions",
-                                                                form.data
-                                                                    .questions
-                                                            );
-                                                        }}
-                                                    />
-                                                    <input
-                                                        className="mx-2 w-full rounded-xl"
-                                                        type="text"
-                                                        value={answer.answer}
-                                                        onChange={(e) => {
-                                                            form.data.questions[
-                                                                currentQuestion
-                                                            ].answers[
-                                                                index
-                                                            ].answer =
-                                                                e.target.value;
-                                                            form.setData(
-                                                                "questions",
-                                                                form.data
-                                                                    .questions
-                                                            );
-                                                        }}
-                                                        placeholder="Option"
-                                                    />
-                                                    <button
-                                                        className="px-2 py-1"
-                                                        onClick={() =>
-                                                            handleRemoveOption(
-                                                                index
-                                                            )
-                                                        }
-                                                    >
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            className="w-6 h-6"
-                                                            viewBox="0 0 24 24"
+                                <>
+                                    {!exam.editable && <div className="p-2 text-center bg-red-200 text-red-600 font-bold">This exam is not editable</div>}
+                                    <div className="p-2">
+                                        <div className="flex flex-col">
+                                            <textarea
+                                                className="w-full rounded-xl"
+                                                type="text"
+                                                value={
+                                                    form.data.questions[
+                                                        currentQuestion
+                                                    ].question
+                                                }
+                                                onChange={(e) => {
+                                                    form.data.questions[
+                                                        currentQuestion
+                                                    ].question = e.target.value;
+                                                    form.setData(
+                                                        "questions",
+                                                        form.data.questions
+                                                    );
+                                                }}
+                                                placeholder="Question"
+                                                disabled={!exam.editable}
+                                            />
+                                            <small className="text-sm text-red-500">
+                                                {
+                                                    form.errors[
+                                                        `questions.${currentQuestion}.question`
+                                                    ]
+                                                }
+                                            </small>
+                                            <small className="text-sm text-red-500">
+                                                {
+                                                    form.errors[
+                                                        `questions.${currentQuestion}.answers`
+                                                    ]
+                                                }
+                                            </small>
+                                        </div>
+                                        <div className="mt-2 flex flex-col gap-2">
+                                            {form.data.questions[
+                                                currentQuestion
+                                            ].answers.map((answer, index) => (
+                                                <div key={index}>
+                                                    <div className="flex items-center">
+                                                        <input
+                                                            type="radio"
+                                                            checked={
+                                                                form.data.questions[
+                                                                    currentQuestion
+                                                                ].correct == index
+                                                            }
+                                                            onChange={(e) => {
+                                                                form.data.questions[
+                                                                    currentQuestion
+                                                                ].correct = index;
+                                                                form.setData(
+                                                                    "questions",
+                                                                    form.data
+                                                                        .questions
+                                                                );
+                                                            }}
+                                                            disabled={!exam.editable}
+                                                        />
+                                                        <input
+                                                            className="mx-2 w-full rounded-xl"
+                                                            type="text"
+                                                            value={answer.answer}
+                                                            onChange={(e) => {
+                                                                form.data.questions[
+                                                                    currentQuestion
+                                                                ].answers[
+                                                                    index
+                                                                ].answer =
+                                                                    e.target.value;
+                                                                form.setData(
+                                                                    "questions",
+                                                                    form.data
+                                                                        .questions
+                                                                );
+                                                            }}
+                                                            placeholder="Option"
+                                                            disabled={!exam.editable}
+                                                        />
+                                                        {exam.editable && <button
+                                                            className="px-2 py-1"
+                                                            onClick={() =>
+                                                                handleRemoveOption(
+                                                                    index
+                                                                )
+                                                            }
                                                         >
-                                                            <path
-                                                                fill="currentColor"
-                                                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
-                                                            ></path>
-                                                        </svg>
-                                                    </button>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                className="w-6 h-6"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    fill="currentColor"
+                                                                    d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"
+                                                                ></path>
+                                                            </svg>
+                                                        </button>}
+                                                    </div>
+                                                    <small className="text-sm text-red-500 w-full">
+                                                        {
+                                                            form.errors[
+                                                                `questions.${currentQuestion}.answers.${index}.answer`
+                                                            ]
+                                                        }
+                                                    </small>
                                                 </div>
-                                                <small className="text-sm text-red-500 w-full">
-                                                    {
-                                                        form.errors[
-                                                            `questions.${currentQuestion}.answers.${index}.answer`
-                                                        ]
-                                                    }
-                                                </small>
-                                            </div>
-                                        ))}
-                                        <div>
-                                            <button className="border border-black rounded-lg px-2 py-1" onClick={hanldeAddOption}>
-                                                Add choice
-                                            </button>
+                                            ))}
+                                            {exam.editable && <div>
+                                                <button className="border border-black rounded-lg px-2 py-1" onClick={hanldeAddOption}>
+                                                    Add choice
+                                                </button>
+                                            </div>}
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             )}
                         {activeTab == 1 && (
                             <div className="p-2">
@@ -276,6 +282,7 @@ export default function Edit({ auth, exam }) {
                                             )
                                         }
                                         placeholder="Duration"
+                                        disabled={!exam.editable}
                                     />
                                     <small className="text-sm text-red-500">{form.errors.duration}</small>
                                 </div>
@@ -344,7 +351,7 @@ export default function Edit({ auth, exam }) {
                                     ></path>
                                 </svg>
                             </div>
-                            {form.data.questions[currentQuestion] && activeTab == 0 && <div
+                            {form.data.questions[currentQuestion] && activeTab == 0 && exam.editable && <div
                                 className="cursor-pointer"
                                 onClick={handleRemoveQuestion}
                                 title="Remove Question"
@@ -398,7 +405,7 @@ export default function Edit({ auth, exam }) {
                                     <span>{index + 1}</span>
                                 </div>
                             ))}
-                            <div
+                            {exam.editable && <div
                                 className="border border-black rounded-xl flex items-center justify-center py-1 px-1 cursor-pointer h-10"
                                 onClick={handleAddQuestion}
                             >
@@ -412,7 +419,7 @@ export default function Edit({ auth, exam }) {
                                         d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z"
                                     ></path>
                                 </svg>
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>

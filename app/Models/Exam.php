@@ -22,6 +22,7 @@ class Exam extends Model
         'duration',
         'status',
         'questions',
+        'editable',
     ];
 
     protected $hidden = [
@@ -31,7 +32,8 @@ class Exam extends Model
     protected $casts = [
         "created_at" => 'datetime:Y-m-d H:i:s',
         "updated_at" => 'datetime:Y-m-d H:i:s',
-        'questions' => 'array'
+        'questions' => 'array',
+        'editable' => 'boolean'
     ];
 
     public function results() {

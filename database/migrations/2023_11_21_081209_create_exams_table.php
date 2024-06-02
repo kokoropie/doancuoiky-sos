@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'publish'])->default('draft');
             $table->json('questions')->nullable();
             $table->char('short_id', 10)->nullable()->unique();
+            $table->boolean('editable')->default(true);
             $table->foreignId('user_id')->references('user_id')->on('users');
             $table->timestamps();
         });
