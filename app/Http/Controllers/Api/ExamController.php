@@ -259,6 +259,11 @@ class ExamController extends Controller
             }
             $result = round($count_correct / $correct_answers->count() * 10, 1);
 
+            $exam->increment('done_count');
+            if ($result >= 5) {
+                $exam->increment('greater_5');
+            }
+
             if (request()->user('sanctum')) {
                 request()->user('sanctum')->results()->create([
                     "exam_id" => $exam->exam_id,
@@ -286,7 +291,8 @@ class ExamController extends Controller
             "joined_exams_count" => $request->user('sanctum')->results()->count(),
             "results_count" => $request->user('sanctum')->exams->reduce(function ($carry, $exam) {
                 return $carry + $exam->results()->count();
-            }, 0)
+            }, 0),
+            "exams" => $request->user('sanctum')->exams()->where("editable", false)->get()
         ]);
     }
 }

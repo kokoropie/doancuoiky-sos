@@ -141,6 +141,11 @@ class ExamController extends Controller
                 }
                 $result = round($count_correct / $correct_answers->count() * 10, 1);
 
+                $exam->increment('done_count');
+                if ($result >= 5) {
+                    $exam->increment('greater_5');
+                }
+
                 if ($request->user()) {
                     $request->user()->results()->create([
                         "exam_id" => $exam->exam_id,

@@ -23,6 +23,8 @@ class Exam extends Model
         'status',
         'questions',
         'editable',
+        'greater_5',
+        'done_count',
     ];
 
     protected $hidden = [
@@ -33,7 +35,10 @@ class Exam extends Model
         "created_at" => 'datetime:Y-m-d H:i:s',
         "updated_at" => 'datetime:Y-m-d H:i:s',
         'questions' => 'array',
-        'editable' => 'boolean'
+        'editable' => 'boolean',
+        'greater_5' => 'integer',
+        'duration' => 'integer',
+        'done_count' => 'integer',
     ];
 
     public function results() {
