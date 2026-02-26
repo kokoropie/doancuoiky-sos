@@ -10,7 +10,7 @@
         "@inertiajs/react": "^1.3.0",
         "@tailwindcss/forms": "^0.5.11",
         "@vitejs/plugin-react": "^4.7.0",
-        "autoprefixer": "^10.4.24",
+        "autoprefixer": "^10.4.27",
         "axios": "^1.13.5",
         "laravel-vite-plugin": "^0.8.0",
         "postcss": "^8.5.6",
